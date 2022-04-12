@@ -12,6 +12,7 @@
           <button id="view-high-scores">View High Scores</button>
           <div class="timer">Time: <span id="time"></span></div>
       </header>
+      <!-- Starting Point of the Quiz-->
       <div class="container">
         <div class="card-contents">
           <div id="quiz">
@@ -20,6 +21,33 @@
               Keep in mind that incorrect answers will penalize your score/time by ten seconds!
             </p>
             <button id="start">Start Quiz</button>
+          </div>
+          <!-- Questions -->
+          <div id="questions" class="hide">
+            <h2 class="question-name"></h2>
+            <button class="btn" id="option1"></button>
+            <button class="btn" id="option2"></button>
+            <button class="btn" id="option3"></button>
+            <button class="btn" id="option4"></button>
+            
+          </div>
+          <!-- Results -->
+          <section id="results" class="hide">
+            <h2>Lets See How You Did!</h2>
+            <h3>You scored: <span id="score"></span></h3>
+            <p>
+              Please Enter Your Initials Here: <input type="text" id="intials"/>
+              <button type="submit" class="btn">Submit</button>
+            </p>
+
+          </section>
+          <!-- Highscores section -->
+          <div id="highScores" class="hide">
+            <h3>High Scores</h3>
+            <div class="highScoresList"></div>
+            <button class="btn" type="submit" id="back-Btn">Back</button>
+            <button class="btn" type="submit" id="clear">Delete HighScores</button>
+
           </div>
 
         </div>
