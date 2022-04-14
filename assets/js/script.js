@@ -67,3 +67,21 @@ function setTime() {
     }, 1000);
 }
 
+var startQuiz = function() {
+    quizContainerEl.style.display = "none"
+    questionsEl.style.display = "block"
+    questionCount = 0;
+
+    setTime();
+    displayQuestion(questionCount);
+}
+
+function displayQuestion(questionId) {
+    if (questionId < questions.length) {
+        questionsEl.textContent = questions[questionId].question;
+        answer1.textContent = questions[questionId].options[0];
+        answer2.textContent = questions[questionId].options[1];
+        answer3.textContent = questions[questionId].options[2];
+        answer4.textContent = questions[questionId].option[3];
+    }
+}
