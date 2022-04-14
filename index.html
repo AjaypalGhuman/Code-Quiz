@@ -10,7 +10,7 @@
   <body>
       <header>
           <button id="view-high-scores">View High Scores</button>
-          <div class="timer">Time: <span id="time"></span></div>
+          <div class="timer">Time: 75<span id="time"></span></div>
       </header>
       <!-- Starting Point of the Quiz-->
       <div class="container">
@@ -37,7 +37,7 @@
             <h3>You scored: <span id="score"></span></h3>
             <p>
               Please Enter Your Initials Here: <input type="text" id="intials"/>
-              <button type="submit" class="btn">Submit</button>
+              <button type="submit" class="btn-submit">Submit</button>
             </p>
 
           </section>
@@ -52,6 +52,13 @@
 
         </div>
       </div>
+
+      <div class="hidden" id="correct">
+        <h2>Correct! Good Job!</h2>
+    </div>
+    <div class="hidden" id="incorrect">
+        <h2>Incorrect!</h2>
+    </div>
 
 
       <script src="assets/js/script.js"></script>
