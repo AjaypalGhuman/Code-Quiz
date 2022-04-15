@@ -24,6 +24,8 @@ var submitScore = document.querySelector("btn-submit");
 
 var deleteScore = document.querySelector("#clear");
 var backButton = document.querySelector("#go-back");
+var correct = document.getElementById(#correct);
+var incorrect = document.getElementById(#incorrect);
 
 var questions = [
     {
@@ -84,4 +86,23 @@ function displayQuestion(questionId) {
         answer3.textContent = questions[questionId].options[2];
         answer4.textContent = questions[questionId].option[3];
     }
+}
+
+var checkAnswer = function(event) {
+    var correctChoice = questions[questionId].correctChoice
+    var currentChoice = event.target.textContent
+    correct.classList.remove("hidden")
+    incorrect.classList.remove("hidden")
+
+    if (currentChoice === correctChoice) {
+        incorrect.classList.add("hidden")
+    } else {
+        correct.classList.add("hidden")
+        secondsRemaining = secondsRemaining - 10;
+    }
+
+    if (questionCount < questions.length) {
+        questionCount ++;
+    }
+    displayQuestion(questionCount);
 }
