@@ -1,31 +1,33 @@
-var timerEl = document.querySelector("#timer");
+var timerEl = document.querySelector("#time");
 var viewHighScores = document.querySelector("#view-high-scores");
-var quizContainerEl = document.querySelector("#quiz");
+var quizContainerEl = document.querySelector("#quiz-intro");
 var questionsEl = document.getElementById("questions");
+var individualQuestion = document.getElementsByClassName("question-name");
 var scoreEl = document.getElementById("score");
 var secondsRemaining = 75;
+var questionAmount = 0;
+var highScoresList = [];
 
 var start = document.getElementById("start");
-var correct = document.querySelector("correct");
-var incorrect = document.querySelector("incorrect");
 
-var answer1 = document.getElementById("option1");
-var answer2 = document.getElementById("option2");
-var answer3 = document.getElementById("option3");
-var answer4 = document.getElementById("option4");
+var selectAnswer = document.querySelectorAll("btn");
+var answer1 = document.querySelector("option1");
+var answer2 = document.querySelector("option2");
+var answer3 = document.querySelector("option3");
+var answer4 = document.querySelector("option4");
+var correct = document.querySelector("#correct");
+var incorrect = document.querySelector("#incorrect");
 
 var results = document.getElementById("results");
-var scoreEl = document.getElementById("score");
 var highScores = document.querySelector("#high-scores");
-var highScoresList = document.querySelector("highScoresList");
-var initialsEl = document.getElementById("initials");
-var submitScore = document.querySelector("btn-submit");
+var scoresListEl = document.querySelector("scoresList");
+var initials = document.getElementById("initials");
+var submitScore = document.getElementsByClassName("btn-submit");
 
 var deleteScore = document.querySelector("#clear");
 var backButton = document.querySelector("#go-back");
-var correct = document.getElementById('correct');
-var incorrect = document.getElementById('incorrect');
 
+// javascript quiz questions array
 var questions = [
     {
         question: "Commonly used data types DO Not Include:",
@@ -53,59 +55,61 @@ var questions = [
         correctChoice: "C"
     }
 ];
+// displays questions and options when start button is initiated
+var startQuiz = function() {
+    quizContainerEl.style.display = "none"
+    questionsEl.style.display = "block"
+    questionAmount = 0;
 
+    initials.value="";
+    setTime();
+    displayQuestion(questionAmount);
+}
+// function for the timer
 function setTime() {
     var timerInterval = setInterval(function () {
-        secondsRemaining--;
+        secondsRemaining --;
         timerEl.textContent = secondsRemaining;
 
-        if (secondsLeft === 0 || questionCount === questions.length) {
+        if (secondsRemaining === 0 || questionAmount === questions.length) {
             clearInterval(timerInterval);
             questionsEl.style.display = "none";
             results.style.display = "block";
-            score.textContent = secondsRemaining;
+            scoreEl.textContent = secondsRemaining;
         }
     }, 1000);
 }
 
-var startQuiz = function() {
-    quizContainerEl.style.display = "none"
-    questionsEl.style.display = "block"
-    questionCount = 0;
-
-    setTime();
-    displayQuestion(questionCount);
-}
-
-function displayQuestion(questionId) {
-    if (questionId < questions.length) {
-        questionsEl.textContent = questions[questionId].question;
-        answer1.textContent = questions[questionId].options[0];
-        answer2.textContent = questions[questionId].options[1];
-        answer3.textContent = questions[questionId].options[2];
-        answer4.textContent = questions[questionId].options[3];
+// questions and possible answer options are shown on screen
+function displayQuestion(index) {
+    if ( index > questions.length - 1) {
+        individualQuestion.textContent = questions[index].question;
+        answer1.textContent = questions[index].options[0];
+        answer2.textContent = questions[index].options[1];
+        answer3.textContent = questions[index].options[2];
+        answer4.textContent = questions[index].options[3];
     }
 }
+// used to check if option selected was correct/incorrect
+function checkAnswer(event) {
+    var correctOption = questions[questions].correctChoice;
+    var currentChoice = event.target.textContent;
+    correct.classList.remove("hidden");
+    incorrect.classList.remove("hidden");
 
-var checkAnswer = function(event) {
-    var correctChoice = questions[questionId].correctChoice
-    var currentChoice = event.target.textContent
-    correct.classList.remove("hidden")
-    incorrect.classList.remove("hidden")
-
-    if (currentChoice === correctChoice) {
-        incorrect.classList.add("hidden")
+    if (currentChoice === correctOption) {
+        incorrect.classList.add("hidden");
     } else {
-        correct.classList.add("hidden")
+        correct.classList.add("hidden");
         secondsRemaining = secondsRemaining - 10;
     }
 
-    if (questionCount < questions.length) {
-        questionCount ++;
+    if (questionAmount < questions.length) {
+        questionAmount++;
     }
-    displayQuestion(questionCount);
+    displayQuestion(questionAmount);
 }
-
+// function to show what occurs when game is finished
 var gameOver = function(){
     clearInterval(timerInterval);
     quizContainerEl.classList.add('hidden')
@@ -119,16 +123,16 @@ var gameOver = function(){
        setTimeout(function() {
            incorrect.setAttribute("class", "hidden");
        }, 1000);
-       submitScore();
+       submitScores();
   }
-
-  function submitScore(event) {
+// used to submit current achieved score to a list
+  function submitScores(event) {
 
       event.preventDefault();
       results.style.display = "none";
       highScores.style.display = "block";
 
-      highScoresList.push({ initials: initialsEl.value, score: secondsRemaining });
+      highScoresList.push({ initials: initials.value, score: secondsRemaining });
       
       if(highScores !== undefined) {
         highScores.sort(function(a,b){
@@ -138,7 +142,7 @@ var gameOver = function(){
             console.log(score)
             var li = document.createElement("li");
             li.textContent = `${highScoresList[i].initials}: ${highScoresList[i].score}`;
-            highScoresListEl.append(li);
+            scoresListEl.append(li);
         })
     }
 
@@ -147,10 +151,11 @@ var gameOver = function(){
     viewScores();
   }
 
+  // saves scores to local storage
 function storeScores() {
     localStorage.setItem("highScoreList", JSON.stringify(highScoresList));
 }
-
+// allows one to view
 function viewScores() {
 
     let storedHighScoreList = JSON.parse(localStorage.getItem("highScoreList"));
@@ -159,17 +164,33 @@ function viewScores() {
         highScoresList = storedHighScoreList;
     }
 }
-
+// clear current high score list
 function clearHighScores() {
     localStorage.clear();
-    highScoresList.classList.add('hidden');
+    scoresListEl.classList.add('hidden');
 }
 
 
-document.getElementById("clear").onclick = clearHighScores;
-start.addEventListener('click', startQuiz)
-option1.addEventListener("click", checkAnswer)
-option2.addEventListener("click", checkAnswer)
-option3.addEventListener("click", checkAnswer)
-option4.addEventListener("click", checkAnswer)
-highScoresList.addEventListener("click", viewHighScores)
+// initiate Quiz by clicking the start button
+start.addEventListener("click",startQuiz);
+selectAnswer.forEach(item =>{
+    item.addEventListener("click",checkAnswer);
+});
+
+backButton.addEventListener("click", function(){
+    highScores.style.display = "none";
+    quizContainerEl.style.display = "block";
+    secondsRemaining = 75;
+    timerEl.textContent = `Time:${secondsRemaining}s`;
+});
+
+deleteScore.addEventListener("click",clearHighScores);
+viewHighScores.addEventListener("click",function(){
+    if(highScores.style.display === "none"){
+        highScores.style.display = "block";
+    }else if (highScores.style.display === "block"){
+        highScores.style.display = "none";
+    } else {
+        return alert ("No scores are currently logged for the Quiz!");
+    }
+});

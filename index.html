@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, intial-scale=1.0">
-    <title>Javascript Code Quiz</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-  </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Code Quiz!</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
   <body>
       <header>
           <button id="view-high-scores">View High Scores</button>
-          <div class="timer">Time: 75<span id="time"></span></div>
+          <div class="timer">Time Remaining: <span id="time">75</span></div>
       </header>
       <!-- Starting Point of the Quiz-->
       <div class="container">
         <div class="card-contents">
-          <div id="quiz">
+          <div id="quiz-intro">
             <h1>Coding Quiz Challenge</h1>
             <p>Try to answer the following code-related questions within the time limit.
               Keep in mind that incorrect answers will penalize your score/time by ten seconds!
@@ -23,20 +23,19 @@
             <button id="start">Start Quiz</button>
           </div>
           <!-- Questions -->
-          <div id="questions">
+          <div class="quiz" id="questions">
             <h2 class="question-name"></h2>
             <button class="btn" id="option1" value="0"></button>
             <button class="btn" id="option2" value="1"></button>
             <button class="btn" id="option3" value="2"></button>
-            <button class="btn" id="option4" value="3"></button>
-            
+            <button class="btn" id="option4" value="3"></button>        
           </div>
           <!-- Results -->
           <section id="results">
             <h2>Lets See How You Did!</h2>
             <h3>You scored: <span id="score"></span></h3>
             <p>
-              Please Enter Your Initials Here: <input type="text" id="intials"/>
+              Please Enter Your Initials Here: <input type="text" id="initials"/>
               <button type="submit" class="btn-submit">Submit</button>
             </p>
 
@@ -44,21 +43,22 @@
           <!-- Highscores section -->
           <div id="high-scores">
             <h3>High Scores</h3>
-            <div class="highScoresList"></div>
+            <div class="highScoresCard">
+              <ol id="scoresList" class="highScoresList"></ol>
+            </div>
             <button class="btn" type="submit" id="go-back">Back</button>
             <button class="btn" type="submit" id="clear">Delete HighScores</button>
 
           </div>
 
         </div>
+        <div class="hidden" id="correct">
+          <h2>Correct! Good Job!</h2>
+        </div>
+        <div class="hidden" id="incorrect">
+          <h2>Incorrect!</h2>
+        </div>    
       </div>
-
-      <div class="hidden" id="correct">
-        <h2>Correct! Good Job!</h2>
-    </div>
-    <div class="hidden" id="incorrect">
-        <h2>Incorrect!</h2>
-    </div>
 
 
       <script src="assets/js/script.js"></script>
